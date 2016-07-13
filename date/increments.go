@@ -8,6 +8,10 @@ func AddSecond(t time.Time) time.Time {
 	return t.Add(time.Second)
 }
 
+func AddMinute(t time.Time) time.Time {
+	return t.Add(time.Minute)
+}
+
 func AddHour(t time.Time) time.Time {
 	return t.Add(time.Hour)
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/DataDrake/ApacheLog2DB/global"
 	"github.com/DataDrake/ApacheLog2DB_Stats/date"
 	"github.com/DataDrake/ApacheLog2DB_Stats/stats"
+	_ "github.com/mattn/go-sqlite3"
 	global2 "kgcoe-git.rit.edu/btmeme/DWSim/global"
 	"os"
 	"time"
@@ -39,6 +40,8 @@ func main() {
 	switch args[0] {
 	case "second":
 		m = date.AddSecond
+	case "minute":
+		m = date.AddMinute
 	case "hour":
 		m = date.AddHour
 	case "day":
@@ -60,9 +63,9 @@ func main() {
 	var end time.Time
 	var dest *csv.Writer
 
-	dest_file, err := os.OpenFile(args[1], os.O_RDWR|os.O_CREATE|os.O_SYNC, 00644)
+	dest_file, err := os.Create(args[1])
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not open output file, reason: %s\n", err.Error())
+		fmt.Fprintf(os.Stderr, "Could not create output file, reason: %s\n", err.Error())
 		goto END
 	}
 	dest = csv.NewWriter(dest_file)
